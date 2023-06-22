@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getTrending } from 'utils/fetchTrendingMovies';
+import { getTrending } from 'utils/fetchs';
+import {
+  StyledList,
+  StyledListItem,
+  StyledListLink,
+  StyledTitle,
+} from './Home.styled';
 
 export function Home() {
   const [trendingMovies, setTrendingMovies] = useState([]);
@@ -23,12 +29,19 @@ export function Home() {
 
   return (
     <div>
-      <h1>Trending Movies</h1>
-      <ul>
-        {trendingMovies.map(movie => (
-          <li key={movie.id}>{movie.title}</li>
-        ))}
-      </ul>
+      <StyledTitle>Movies are trending today:</StyledTitle>
+      <StyledList>
+        {trendingMovies.map(
+          movie =>
+            movie.title && (
+              <StyledListItem key={movie.id}>
+                <StyledListLink to={`${movie.id}`}>
+                  {movie.title}
+                </StyledListLink>
+              </StyledListItem>
+            )
+        )}
+      </StyledList>
     </div>
   );
 }
