@@ -13,10 +13,27 @@ export async function getTrending(signal) {
 
 export async function getDetails(movieId, signal) {
   const resp = await axios.get(
-    `${BASE_URL}movie/${movieId}?api_key=${API_KEY}`,
+    `${BASE_URL}/movie/${movieId}?language=en-US?&api_key=${API_KEY}`,
     signal
   );
 
-  return resp.data;
+  return resp;
 }
 
+export async function getCast(movieId, signal) {
+  const resp = await axios.get(
+    `${BASE_URL}movie/${movieId}/credits?language=en-US&api_key=${API_KEY}`,
+    signal
+  );
+
+  return resp;
+}
+
+export async function getReview(movieId, signal) {
+  const resp = await axios.get(
+    `${BASE_URL}movie/${movieId}/reviews?language=en-US&api_key=${API_KEY}`,
+    signal
+  );
+
+  return resp;
+}
