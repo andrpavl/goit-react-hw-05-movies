@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams, Outlet } from 'react-router-dom';
 import { getDetails } from 'utils/fetchs';
 
 export const MovieDetails = () => {
@@ -33,22 +33,34 @@ export const MovieDetails = () => {
   return (
     <main>
       {error && <p>{error}</p>}
+      {loading && <p>Loading...</p>}
       {!loading && movieDetails && (
         <>
           <img
-            src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w500${movieDetails.data.poster_path}`}
             alt={movieDetails.title}
           />
-          <h2>{`${movieDetails.title} (${movieDetails.release_date.slice(
-            0,
-            4
-          )})`}</h2>
-          <h3>User Score:</h3>
-          <p>{movieDetails.user_score}</p>
+          <h2>{`${
+            movieDetails.data.title
+          } (${movieDetails.data.release_date.slice(0, 4)})`}</h2>
+          <p>
+            <b>User Score: </b>
+            {Math.round(movieDetails.data.vote_average * 10)}%
+          </p>
           <h3>Overview:</h3>
-          <p>{movieDetails.overview}</p>
+          <p>{movieDetails.data.overview}</p>
           <h3>Genres:</h3>
-          <p>{movieDetails.genres.join(', ')}</p>
+          <p>{movieDetails.data.genres.map(genre => genre.name).join(', ')}</p>
+          <ul>
+            <b>Additional information:</b>
+            <li>
+              <Link to="cast">Cast</Link>
+            </li>
+            <li>
+              <Link to="review">Review</Link>
+            </li>
+          </ul>
+          <Outlet />
         </>
       )}
     </main>

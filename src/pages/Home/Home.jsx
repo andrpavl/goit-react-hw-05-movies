@@ -25,6 +25,7 @@ export function Home() {
     fetchTrendingMovies();
 
     return () => abortCtrl.abort();
+    
   }, []);
 
   return (
@@ -35,7 +36,7 @@ export function Home() {
           movie =>
             movie.title && (
               <StyledListItem key={movie.id}>
-                <StyledListLink to={`${movie.id}`}>
+                <StyledListLink to={`movies/${movie.id}`}>
                   {movie.title}
                 </StyledListLink>
               </StyledListItem>
