@@ -37,3 +37,12 @@ export async function getReview(movieId, signal) {
 
   return resp;
 }
+
+export async function getMovies(query, signal) {
+  const resp = await axios.get(
+    `${BASE_URL}/search/movie?query=${query}?&api_key=${API_KEY}`,
+    signal
+  );
+
+  return resp;
+}

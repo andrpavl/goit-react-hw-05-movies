@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getCast } from 'utils/fetchs';
+import Loader from 'components/Loader/Loader';
 
 export const Cast = () => {
   const { movieId } = useParams();
@@ -35,7 +36,7 @@ export const Cast = () => {
   return (
     <>
       {error && <p>{error}</p>}
-      {loading && <div>Loading.......</div>}
+      {loading && <Loader />}
       {!loading && cast && (
         <ul>
           {cast.map(({ character, name, profile_path, id }) => {

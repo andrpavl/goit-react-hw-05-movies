@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { Link, useParams, Outlet } from 'react-router-dom';
 import { getDetails } from 'utils/fetchs';
+import Loader from 'components/Loader/Loader';
 
 export const MovieDetails = () => {
   const { movieId } = useParams();
@@ -60,7 +61,9 @@ export const MovieDetails = () => {
               <Link to="review">Review</Link>
             </li>
           </ul>
-          <Outlet />
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
         </>
       )}
     </main>
