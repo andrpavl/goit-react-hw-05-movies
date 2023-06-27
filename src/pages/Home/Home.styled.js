@@ -1,18 +1,14 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const StyledList = styled.ol`
-  color: lightslategray;
-  font-weight: 500;
+export const StyledList = styled.ul`
+  list-style: none;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   letter-spacing: 0.7px;
 `;
 
 export const StyledListItem = styled.li`
   margin-bottom: 10px;
-  &:hover {
-    color: cornflowerblue;
-  }
 `;
 
 export const StyledListLink = styled(Link)`

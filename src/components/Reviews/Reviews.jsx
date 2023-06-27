@@ -1,9 +1,9 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getReview } from 'utils/fetchs';
 import Loader from 'components/Loader/Loader';
 
-export const Review = () => {
+const Review = () => {
   const { movieId } = useParams();
   const [review, setReview] = useState(null);
   const [error, setError] = useState(null);
@@ -34,9 +34,10 @@ export const Review = () => {
 
   return (
     <>
+      {error && <p>{error}</p>}
       {loading && <Loader />}
       {review && review.length > 0 ? (
-        <ul>
+        <ol>
           {review.map(({ author, content, id }) => {
             return (
               <li key={id}>
@@ -45,7 +46,7 @@ export const Review = () => {
               </li>
             );
           })}
-        </ul>
+        </ol>
       ) : (
         <p>
           <i> We don't have any reviews for this movie</i>
@@ -54,3 +55,5 @@ export const Review = () => {
     </>
   );
 };
+
+export default Review;

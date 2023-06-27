@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getCast } from 'utils/fetchs';
 import Loader from 'components/Loader/Loader';
+import { ActorList, ActorCard } from './Cast.styled';
 
-export const Cast = () => {
+const Cast = () => {
   const { movieId } = useParams();
   const [cast, setCast] = useState(null);
   const [error, setError] = useState(null);
@@ -38,10 +39,10 @@ export const Cast = () => {
       {error && <p>{error}</p>}
       {loading && <Loader />}
       {!loading && cast && (
-        <ul>
+        <ActorList>
           {cast.map(({ character, name, profile_path, id }) => {
             return (
-              <li key={id}>
+              <ActorCard key={id}>
                 {profile_path ? (
                   <img
                     src={`https://image.tmdb.org/t/p/w200${profile_path}`}
@@ -59,11 +60,13 @@ export const Cast = () => {
                 <p>
                   <b>Character:</b> {character}
                 </p>
-              </li>
+              </ActorCard>
             );
           })}
-        </ul>
+        </ActorList>
       )}
     </>
   );
 };
+
+export default Cast;

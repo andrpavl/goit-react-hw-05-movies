@@ -1,11 +1,17 @@
-import { useSearchParams, Link, useLocation } from 'react-router-dom';
-import { TbMovie } from 'react-icons/tb';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import Notiflix from 'notiflix';
 import { useEffect, useState } from 'react';
 import { getMovies } from 'utils/fetchs';
 import Loader from 'components/Loader/Loader';
+import {
+  MovieList,
+  MovieLink,
+  StyledInput,
+  StyledForm,
+  StyledBtn,
+} from './Movies.styled';
 
-export function Movies() {
+const Movies = () => {
   const [movie, setMovie] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -38,7 +44,10 @@ export function Movies() {
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
-    if (form.elements.query.value === '') return;
+    if (form.elements.query.value === '') {
+      Notiflix.Notify.warning('Ooops! You need to enter something');
+      return;
+    }
     setSearchParams({ query: form.elements.query.value });
     form.reset();
   };
@@ -46,24 +55,28 @@ export function Movies() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Enter movie name" name="query" />
-        <button type="submit">
-          Search <TbMovie />
-        </button>
-      </form>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledInput type="text" placeholder="Enter movie name" name="query" />
+        <StyledBtn type="submit">Search</StyledBtn>
+      </StyledForm>
 
-      {error && Notiflix.Notify.failure('You need to enter something))')}
+      {error &&
+        Notiflix.Notify.failure(
+          'Sorry, cannot find any movie. Please, try again'
+        )}
       {loading && <Loader />}
-      <ul>
+
+      <MovieList>
         {movie.map(({ title, id }) => (
           <li key={id}>
-            <Link to={`${id}`} state={{ from: location }}>
+            <MovieLink to={`${id}`} state={{ from: location }}>
               {title}
-            </Link>
+            </MovieLink>
           </li>
         ))}
-      </ul>
+      </MovieList>
     </>
   );
-}
+};
+
+export default Movies;

@@ -1,14 +1,24 @@
-import { useEffect, useState, Suspense } from 'react';
-import { Link, useParams, Outlet } from 'react-router-dom';
+import { useEffect, useState, Suspense, useRef } from 'react';
+import { useParams, Outlet, useLocation } from 'react-router-dom';
 import { getDetails } from 'utils/fetchs';
 import Loader from 'components/Loader/Loader';
+import { BackLink } from 'components/BackLink/BackLink';
+import {
+  DetsWrap,
+  StyledInfo,
+  StyledH3Title,
+  AddList,
+  AddLink,
+} from './MovieDetails.styled';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const { movieId } = useParams();
   console.log(movieId);
   const [movieDetails, setMovieDetails] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+  const backLinkLocation = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     const abortCtrl = new AbortController();
@@ -34,33 +44,42 @@ export const MovieDetails = () => {
   return (
     <main>
       {error && <p>{error}</p>}
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
       {!loading && movieDetails && (
         <>
-          <img
-            src={`https://image.tmdb.org/t/p/w500${movieDetails.data.poster_path}`}
-            alt={movieDetails.title}
-          />
-          <h2>{`${
-            movieDetails.data.title
-          } (${movieDetails.data.release_date.slice(0, 4)})`}</h2>
-          <p>
-            <b>User Score: </b>
-            {Math.round(movieDetails.data.vote_average * 10)}%
-          </p>
-          <h3>Overview:</h3>
-          <p>{movieDetails.data.overview}</p>
-          <h3>Genres:</h3>
-          <p>{movieDetails.data.genres.map(genre => genre.name).join(', ')}</p>
-          <ul>
+          <BackLink to={backLinkLocation.current}>Go back</BackLink>
+          <DetsWrap>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movieDetails.data.poster_path}`}
+              alt={movieDetails.title}
+              width="350px"
+              height="500px"
+            />
+            <StyledInfo>
+              <h2>{`${
+                movieDetails.data.title
+              } (${movieDetails.data.release_date.slice(0, 4)})`}</h2>
+              <p>
+                <b>User Score: </b>
+                {Math.round(movieDetails.data.vote_average * 10)}%
+              </p>
+              <StyledH3Title>Overview:</StyledH3Title>
+              <p>{movieDetails.data.overview}</p>
+              <StyledH3Title>Genres:</StyledH3Title>
+              <p>
+                {movieDetails.data.genres.map(genre => genre.name).join(', ')}
+              </p>
+            </StyledInfo>
+          </DetsWrap>
+          <AddList>
             <b>Additional information:</b>
             <li>
-              <Link to="cast">Cast</Link>
+              <AddLink to="cast">Cast</AddLink>
             </li>
             <li>
-              <Link to="review">Review</Link>
+              <AddLink to="review">Review</AddLink>
             </li>
-          </ul>
+          </AddList>
           <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>
@@ -69,3 +88,5 @@ export const MovieDetails = () => {
     </main>
   );
 };
+
+export default MovieDetails;

@@ -1,13 +1,16 @@
 import { FallingLines } from 'react-loader-spinner';
+import { LoaderStyled } from './Loader.styled';
 
 function Loader() {
   return (
-    <FallingLines
-      color="#4fa94d"
-      width="100"
-      visible={true}
-      ariaLabel="falling-lines-loading"
-    />
+    <LoaderStyled>
+      <FallingLines
+        color="#258ab3"
+        width="100"
+        visible={true}
+        ariaLabel="falling-lines-loading"
+      />
+    </LoaderStyled>
   );
 }
 
