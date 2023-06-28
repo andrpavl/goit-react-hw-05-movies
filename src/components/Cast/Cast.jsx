@@ -47,13 +47,15 @@ const Cast = () => {
                   <img
                     src={`https://image.tmdb.org/t/p/w200${profile_path}`}
                     alt={name}
+                    width="150px"
+                    height="200px"
                   />
                 ) : (
                   <img
                     src="https://i.pinimg.com/564x/fc/04/73/fc047347b17f7df7ff288d78c8c281cf.jpg"
                     alt="no_image"
-                    width="200px"
-                    height="300px"
+                    width="150px"
+                    height="200px"
                   />
                 )}
                 <p>{name}</p>

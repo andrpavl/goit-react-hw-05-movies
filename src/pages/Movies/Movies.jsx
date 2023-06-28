@@ -56,7 +56,7 @@ const Movies = () => {
   return (
     <>
       <StyledForm onSubmit={handleSubmit}>
-        <StyledInput type="text" placeholder="Enter movie name" name="query" />
+        <StyledInput type="text" autoComplete='off' placeholder="Enter movie name" name="query" />
         <StyledBtn type="submit">Search</StyledBtn>
       </StyledForm>
 
