@@ -32,6 +32,9 @@ const Movies = () => {
         }
       } catch (error) {
         setError(error.message);
+        Notiflix.Notify.failure(
+          'Sorry, cannot find any movie. Please, try again'
+        );
       } finally {
         setLoading(false);
       }
@@ -50,13 +53,19 @@ const Movies = () => {
     }
     setSearchParams({ query: form.elements.query.value });
     form.reset();
+    Notiflix.Notify.success('Enjoy!');
   };
   // console.log(movie);
 
   return (
     <>
       <StyledForm onSubmit={handleSubmit}>
-        <StyledInput type="text" autoComplete='off' placeholder="Enter movie name" name="query" />
+        <StyledInput
+          type="text"
+          autoComplete="off"
+          placeholder="Enter movie name"
+          name="query"
+        />
         <StyledBtn type="submit">Search</StyledBtn>
       </StyledForm>
 
